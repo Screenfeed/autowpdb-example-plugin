@@ -1,0 +1,54 @@
+{
+	"name": "screenfeed/autowpdb-example-plugin",
+	"description": "A WordPress plugin showing how to use Screenfeed/AutoWPDB.",
+	"keywords": [
+		"wordpress",
+		"database"
+	],
+	"homepage": "https://github.com/Screenfeed/autowpdb-example-plugin",
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Grégory Viguier",
+			"role": "Developer"
+		}
+	],
+	"type": "library",
+	"config": {
+		"sort-packages": true
+	},
+	"support": {
+		"issues": "https://github.com/Screenfeed/autowpdb-example-plugin/issues",
+		"source": "https://github.com/Screenfeed/autowpdb-example-plugin"
+	},
+	"require": {
+		"php": ">=7.0.0",
+		"screenfeed/autowpdb": "dev-master"
+	},
+	"require-dev": {
+		"php": "~7.1",
+		"automattic/phpcs-neutron-standard": "*",
+		"dealerdirect/phpcodesniffer-composer-installer": "*",
+		"phpcompatibility/phpcompatibility-wp": "*",
+		"phpmetrics/phpmetrics": "*",
+		"roave/security-advisories": "dev-master",
+		"squizlabs/php_codesniffer": "*",
+		"szepeviktor/phpstan-wordpress": "*",
+		"wp-coding-standards/wpcs": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Screenfeed\\AutoWPDBExamplePlugin\\": "src/"
+		}
+	},
+	"scripts": {
+		"cs": "phpcs",
+		"stan": "\"vendor/bin/phpstan\" analyze --memory-limit=200M",
+		"metrics": "phpmetrics --config=phpmetrics.json",
+		"run-lints": [
+			"@cs",
+			"@stan",
+			"@metrics"
+		]
+	}
+}

@@ -1,0 +1,6 @@
+# Directories
+/report
+/vendor
+# Files
+.DS_Store
+Thumbs.db
