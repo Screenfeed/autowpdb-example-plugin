@@ -1,7 +1,7 @@
 {
 	"name": "autowpdb-example-plugin",
 	"description": "A WordPress plugin showing how to use Screenfeed/AutoWPDB.",
-	"version": "0.1",
+	"version": "0.2.0",
 	"homepage": "https://github.com/Screenfeed/autowpdb-example-plugin",
 	"license": "GPL-2.0",
 	"private": true,

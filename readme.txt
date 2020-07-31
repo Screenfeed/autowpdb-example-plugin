@@ -2,7 +2,7 @@
 Contributors: GregLone
 Requires at least: 4.9.6
 Tested up to: 5.4.2
-Stable tag: 0.1
+Stable tag: 0.2
 
 This is a WordPress plugin showing how to use [Screenfeed/AutoWPDB](https://github.com/Screenfeed/autowpdb).
 

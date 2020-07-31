@@ -3,7 +3,7 @@
  * Plugin Name: AutoWPDB Example Plugin
  * Plugin URI: https://github.com/Screenfeed/autowpdb-example-plugin
  * Description: A plugin showing how to use Screenfeed/AutoWPDB.
- * Version: 0.1
+ * Version: 0.2
  * Requires PHP: 7.0
  * Author: Grégory Viguier
  * Author URI: https://www.screenfeed.fr/
