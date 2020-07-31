@@ -33,8 +33,8 @@ class CRUD extends Basic {
 	public function has_items(): bool {
 		global $wpdb;
 
-		$column     = esc_sql( $this->table->get_primary_key() );
-		$table_name = $this->table->get_table_name();
+		$column     = esc_sql( $this->get_table_definition()->get_primary_key() );
+		$table_name = $this->get_table_definition()->get_table_name();
 
 		return (bool) $wpdb->get_var( "SELECT $column FROM $table_name LIMIT 1;" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
@@ -50,7 +50,7 @@ class CRUD extends Basic {
 	public function get_item( int $prim_key_value ) { // phpcs:ignore NeutronStandard.Functions.TypeHint.NoReturnType
 		$results = $this->get(
 			[ '*' ],
-			[ $this->table->get_primary_key() => $prim_key_value ]
+			[ $this->get_table_definition()->get_primary_key() => $prim_key_value ]
 		);
 
 		if ( empty( $results ) ) {
@@ -71,8 +71,8 @@ class CRUD extends Basic {
 	public function get_items( array $prim_key_values ) { // phpcs:ignore NeutronStandard.Functions.TypeHint.NoReturnType
 		global $wpdb;
 
-		$table_name      = $this->table->get_table_name();
-		$where           = esc_sql( $this->table->get_primary_key() );
+		$table_name      = $this->get_table_definition()->get_table_name();
+		$where           = esc_sql( $this->get_table_definition()->get_primary_key() );
 		$prim_key_values = DBUtilities::prepare_values_list( $prim_key_values );
 
 		$results = $wpdb->get_results(
@@ -97,8 +97,8 @@ class CRUD extends Basic {
 	public function delete_oldest_item() { // phpcs:ignore NeutronStandard.Functions.TypeHint.NoReturnType
 		global $wpdb;
 
-		$table_name = $this->table->get_table_name();
-		$where      = esc_sql( $this->table->get_primary_key() );
+		$table_name = $this->get_table_definition()->get_table_name();
+		$where      = esc_sql( $this->get_table_definition()->get_primary_key() );
 
 		$wpdb->check_current_query = false;
 
