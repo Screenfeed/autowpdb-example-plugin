@@ -9,7 +9,7 @@ declare( strict_types=1 );
 
 namespace Screenfeed\AutoWPDBExamplePlugin;
 
-use Screenfeed\AutoWPDB\TableDefinition\TableDefinitionInterface;
+use Screenfeed\AutoWPDB\Table;
 use Screenfeed\AutoWPDB\TableUpgrader;
 use stdClass;
 
@@ -31,9 +31,9 @@ class Plugin {
 	const POST_ACTION_ID = 'autowpdbexample_action';
 
 	/**
-	 * A TableDefinitionInterface object.
+	 * A Table object.
 	 *
-	 * @var   TableDefinitionInterface
+	 * @var   Table
 	 * @since 0.1
 	 */
 	protected $table;
@@ -62,7 +62,7 @@ class Plugin {
 	 * @return void
 	 */
 	public function init() {
-		$this->table    = new CustomTable();
+		$this->table    = new Table( new CustomTable() );
 		$this->upgrader = new TableUpgrader( $this->table );
 
 		$this->upgrader->init();
@@ -101,7 +101,7 @@ class Plugin {
 		}
 
 		// Get everything that is in the table.
-		$this->table_contents = ( new CRUD( $this->table ) )->get( [ '*' ], [], OBJECT_K );
+		$this->table_contents = ( new CRUD( $this->table->get_table_definition() ) )->get( [ '*' ], [], OBJECT_K );
 
 		// Page header.
 		$this->display_page_header();
@@ -132,7 +132,7 @@ class Plugin {
 				sprintf(
 					/* translators: 1 is the name of the DB table, 2 is an option name. */
 					__( 'Your custom table "%1$s" does not seem to be ready, something went wrong. Its current version number is maybe stored in the (network?) option "%2$s".', 'autowpdb-example-plugin' ),
-					$this->table->get_table_name(),
+					$this->table->get_table_definition()->get_table_name(),
 					$this->upgrader->get_db_version_option_name()
 				)
 			)
@@ -159,7 +159,7 @@ class Plugin {
 				sprintf(
 					/* translators: 1 is the name of the DB table, 2 is a version number, 3 is an option name. */
 					__( 'Your custom table "%1$s" is ready and its current version is %2$d. This version number is stored in the (network?) option "%3$s".', 'autowpdb-example-plugin' ),
-					$this->table->get_table_name(),
+					$this->table->get_table_definition()->get_table_name(),
 					$this->upgrader->get_db_version(),
 					$this->upgrader->get_db_version_option_name()
 				)
@@ -321,7 +321,7 @@ class Plugin {
 	 * @return int The new entry ID.
 	 */
 	public function action_insert_entry(): int {
-		return ( new CRUD( $this->table ) )->insert(
+		return ( new CRUD( $this->table->get_table_definition() ) )->insert(
 			[
 				'file_date' => date_i18n( 'Y-m-d H:i:s' ),
 				'path'      => '/foo/bar/' . wp_rand(),
@@ -343,7 +343,7 @@ class Plugin {
 	 * @return int The number of deleted entries.
 	 */
 	public function action_delete_entry(): int {
-		return (int) ( new CRUD( $this->table ) )->delete_oldest_item();
+		return (int) ( new CRUD( $this->table->get_table_definition() ) )->delete_oldest_item();
 	}
 
 	/** ----------------------------------------------------------------------------------------- */
